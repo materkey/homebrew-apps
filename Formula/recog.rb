@@ -32,17 +32,22 @@ class Recog < Formula
   version "0.1.0"
   sha256 "cee01284c8d0d77609dd019667b16150631d31e5415f59c0c5df812361a28fa9"
   license "MIT"
+  revision 1
   depends_on arch: :arm64
   depends_on :macos
   depends_on "ffmpeg"
 
   def install
     libexec.install Dir["*", ".env.example", ".claude"]
+    # Homebrew preserves libexec metadata when the prefix already has its license.
+    cp libexec/"LICENSE", prefix/"LICENSE"
     (libexec/"recog-homebrew").write("1\n")
     bin.install_symlink libexec/"bin/recog"
   end
 
   test do
+    assert_predicate libexec/"CHANGELOG.md", :file?
+    assert_predicate libexec/"LICENSE", :file?
     assert_match "recog", shell_output("#{bin}/recog --help")
   end
 end

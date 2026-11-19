@@ -15,4 +15,6 @@ recog setup
 
 If you already use `gh`, check the selected account with `gh auth status`.
 To verify repository access, run `gh release view --repo materkey/recog`.
+If Homebrew reports an untrusted tap, run `brew trust --formula materkey/apps/recog`
+and repeat the install. This grants trust to the Recog formula only.
 Run `recog update` for subsequent updates.

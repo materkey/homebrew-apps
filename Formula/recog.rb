@@ -1,34 +1,7 @@
-require "download_strategy"
-
-class RecogReleaseDownloadStrategy < AbstractFileDownloadStrategy
-  def fetch(timeout: nil)
-    cached_location.dirname.mkpath
-    lock = DownloadLock.new(temporary_path)
-    begin
-      lock.lock_or_wait(quiet: quiet?, timeout: timeout)
-      unless cached_location.exist?
-        gh = HOMEBREW_PREFIX/"bin/gh"
-        gh = which("gh") unless gh.executable?
-        raise "Install gh and run gh auth login with access to materkey/recog" unless gh
-
-        system_command! gh, args: ["release", "download", "v#{version}",
-                                   "--repo", "github.com/materkey/recog",
-                                   "--pattern", File.basename(url),
-                                   "--output", temporary_path.to_s, "--clobber"],
-                            timeout: timeout
-        temporary_path.rename(cached_location)
-      end
-      create_symlink_to_cached_download(cached_location)
-    ensure
-      lock.unlock(unlink: true)
-    end
-  end
-end
-
 class Recog < Formula
   desc "Live Russian conference transcription"
   homepage "https://github.com/materkey/recog"
-  url "https://github.com/materkey/recog/releases/download/v0.2.0/recog-v0.2.0-macos-arm64.tar.gz", using: RecogReleaseDownloadStrategy
+  url "https://github.com/materkey/recog/releases/download/v0.2.0/recog-v0.2.0-macos-arm64.tar.gz"
   version "0.2.0"
   sha256 "71d970815f80d5bac6d33f50f8328902ad776ec5b3eef3976ba74a44d503372c"
   license "MIT"

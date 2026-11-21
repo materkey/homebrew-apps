@@ -28,9 +28,9 @@ end
 class Recog < Formula
   desc "Live Russian conference transcription"
   homepage "https://github.com/materkey/recog"
-  url "https://github.com/materkey/recog/releases/download/v0.1.5/recog-v0.1.5-macos-arm64.tar.gz", using: RecogReleaseDownloadStrategy
-  version "0.1.5"
-  sha256 "f21a4cd31840290f71153c7c1d5bdeee12de8d200931ae5b21e33d43de8ceafb"
+  url "https://github.com/materkey/recog/releases/download/v0.2.0/recog-v0.2.0-macos-arm64.tar.gz", using: RecogReleaseDownloadStrategy
+  version "0.2.0"
+  sha256 "71d970815f80d5bac6d33f50f8328902ad776ec5b3eef3976ba74a44d503372c"
   license "MIT"
   depends_on arch: :arm64
   depends_on macos: :ventura
